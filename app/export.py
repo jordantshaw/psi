@@ -15,7 +15,7 @@ queries = {
              , skill.main_skill
              , sum(case when score.correct = true then 1 else 0 end) as correct
              , sum(case when score.correct = false then 1 else 0 end) as incorrect
-             , sum(case when score.correct = true then 1 else 0 end) >= 8 as passed
+             , (cast(sum(case when score.correct = true then 1 else 0 end) as float)  / count(score.correct)) >= 0.8 as passed
         from score
         inner join student on student.id = score.student_id
         inner join word on word.word = score.word
